@@ -1,5 +1,6 @@
 package functions;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -22,27 +23,15 @@ public class CloudFunctionApplication {
     SpringApplication.run(CloudFunctionApplication.class, args);
   }
 
+  @Autowired
+  StockQuoteService stockQuoteService;
   @Bean
   public Function<Message<Map<String, List<Object>>>, Map<String, List<Object>>> quote() {
     return (inputMessage) -> {
       Map<String, List<Object>> result = new HashMap<>();
       if (!inputMessage.getPayload().isEmpty()) {
         String symbol = inputMessage.getPayload().keySet().iterator().next();
-        try {
-          Stock stock = YahooFinance.get(symbol);
-          if (stock != null) {
-            var quote = stock.getQuote();
-            if (quote == null || quote.getPrice() == null) {
-              result.put(symbol.toUpperCase(), Collections.singletonList("No price for symbol found!"));
-            } else {
-              result.put(symbol.toUpperCase(), Collections.singletonList(quote.getPrice()));
-            }
-          } else {
-            result.put(symbol.toUpperCase(), Collections.singletonList("Symbol not found!"));
-          }
-        } catch(IOException e) {
-          result.put("ERROR", Collections.singletonList(e.toString()));
-        }
+        result = stockQuoteService.getQuote(symbol);
       }
       return result;
     };
