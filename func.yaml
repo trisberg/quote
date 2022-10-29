@@ -1,23 +1,26 @@
-specVersion: 0.25.0
+specVersion: 0.34.0
 name: quote
-namespace: default
 runtime: springboot
 registry: docker.io/trisberg
 image: docker.io/trisberg/quote
 imageDigest: ""
-buildpacks: []
-builder: pack
-volumes: []
-buildEnvs:
-- name: BP_NATIVE_IMAGE
-  value: "false"
-envs: []
-annotations: {}
-options: {}
-labels: []
-healthEndpoints:
-  liveness: /actuator/health
-  readiness: /actuator/health
 created: 2022-10-17T19:40:35.549549-04:00
 invocation:
   format: http
+build:
+  buildpacks: []
+  builder: pack
+  buildEnvs:
+  - name: BP_NATIVE_IMAGE
+    value: "false"
+run:
+  volumes: []
+  envs: []
+deploy:
+  namespace: default
+  annotations: {}
+  options: {}
+  labels: []
+  healthEndpoints:
+    liveness: /actuator/health
+    readiness: /actuator/health
