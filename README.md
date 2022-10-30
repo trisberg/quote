@@ -1,6 +1,6 @@
 # Function project for stock quotes
 
-This sample project contains a single function based on Spring Cloud Function: `functions.CloudFunctionApplication.quote()`, which returns stock price for a stock symbol passed via HTTP request.
+This sample project contains a Spring Boot app containing a single `quote` function based on Spring Cloud Function. The `quote` will look up and return the stock price for a stock symbol passed via a HTTP request.
 
 For the instructions below, make sure that your current directory is named `quote` and contains the quote function source.
 
@@ -19,19 +19,21 @@ The command starts a server that listens on port 8080.
 You can invoke the function using `curl`:
 
 ```shell
-curl $URL --data "^DJI"
+curl localhost:8080 --data "^DJI"
 ```
 
 ## Local build and deploying to cluster
 
 ### Building and deploying with Jib
 
+> __NOTE:__ This is recommended for ARM-based Macs
+
 The following command builds an OCI image for the function.
-This uses Jib to build a multi-arch image, and you can run this sample on Intel as well as ARM based systems.
-Set a `FUNC_REGISTRY` environment variable with your preferred registry account, e.g. "docker.io/${docker_id}".
+This uses [Jib](https://github.com/GoogleContainerTools/jib) to build a multi-arch image, and you can run this sample on Intel as well as ARM based systems.
+Set a `FUNC_REGISTRY` environment variable with your preferred registry account, e.g. "docker.io/docker-id".
 
 ```shell
-export FUNC_REGISTRY=<your preferred registry>
+export FUNC_REGISTRY="<your preferred registry>"
 ./mvnw compile jib:build -Dimage=${FUNC_REGISTRY}/quote
 ```
 
