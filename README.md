@@ -48,16 +48,20 @@ func deploy --build=false --push=false --image=${FUNC_REGISTRY}/quote
 
 ### Building native image with Maven
 
+```shell
+export FUNC_REGISTRY="<your preferred registry>"
+```
+
 On an `amd64` system, like systems with Intel or AMD processors. run:
 
 ```
-./mvnw -Pnative spring-boot:build-image
+./mvnw -Pnative spring-boot:build-image -Dspring-boot.build-image.imageName=$FUNC_REGISTRY/quote:amd64
 ```
 
 On an `arm64` system, like new M1/M2 Macs, run:
 
 ```
-./mvnw -Pnative,arm64 spring-boot:build-image
+./mvnw -Pnative,arm64 spring-boot:build-image -Dspring-boot.build-image.imageName=$FUNC_REGISTRY/quote:arm64
 ```
 
 ### Building and deploying with `func` and buildpacks
