@@ -46,6 +46,20 @@ We specify `--build=false` since we alredy built the image and `--push=false` si
 func deploy --build=false --push=false --image=${FUNC_REGISTRY}/quote
 ```
 
+### Building native image with Maven
+
+On an `amd64` system, like systems with Intel or AMD processors. run:
+
+```
+./mvnw -Pnative spring-boot:build-image
+```
+
+On an `arm64` system, like new M1/M2 Macs, run:
+
+```
+./mvnw -Pnative,arm64 spring-boot:build-image
+```
+
 ### Building and deploying with `func` and buildpacks
 
 The following command will build the function using a buildpack using the local Docker daemon.
