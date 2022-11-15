@@ -48,7 +48,7 @@ func deploy --build=false --push=false --image=${FUNC_REGISTRY}/quote
 
 ### Building and deploying native image with Maven
 
-> Note: Since the architecture for the image should match the architecture for the Kubernetes cluster, these instructions now build a multi-arch image and the one that will be used depends on the architecture of the running cluster where it is later deployed.
+> Note: Since the architecture for the image should match the architecture for the Kubernetes cluster, these instructions only work if you run the cluster on the same processor architecture that you are using for building.
 
 ```shell
 export FUNC_REGISTRY="<your preferred registry>"
