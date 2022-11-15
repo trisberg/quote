@@ -48,37 +48,23 @@ func deploy --build=false --push=false --image=${FUNC_REGISTRY}/quote
 
 ### Building and deploying native image with Maven
 
-> Note: Since the architecture for the image should match the architecture for the local Kubernetes cluster, we need to use different images for each acrhitecture when building and deploying native images.
+> Note: Since the architecture for the image should match the architecture for the Kubernetes cluster, these instructions now build a multi-arch image and the one that will be used depends on the architecture of the running cluster where it is later deployed.
 
 ```shell
 export FUNC_REGISTRY="<your preferred registry>"
 ```
 
-On an `amd64` system, like systems with Intel or AMD processors. run:
+Next, to build the image run:
 
 ```
-./mvnw -Pnative spring-boot:build-image -Dspring-boot.build-image.imageName=$FUNC_REGISTRY/quote:amd64
-```
-
-On an `arm64` system, like new M1/M2 Macs, run:
-
-```
-./mvnw -Pnative,arm64 spring-boot:build-image -Dspring-boot.build-image.imageName=$FUNC_REGISTRY/quote:arm64
+./mvnw -Pnative spring-boot:build-image -Dspring-boot.build-image.imageName=$FUNC_REGISTRY/quote
 ```
 
 The following command will deploy the function to the cluster. 
 We specify `--build=false` since we alredy built the image.
 
-On an `amd64` system, run:
-
 ```shell
-func deploy --build=false --image=${FUNC_REGISTRY}/quote:amd64
-```
-
-On an `arm64` system, run:
-
-```shell
-func deploy --build=false --image=${FUNC_REGISTRY}/quote:arm64
+func deploy --build=false --image=${FUNC_REGISTRY}/quote
 ```
 
 ### Building and deploying with `func` and buildpacks
