@@ -1,6 +1,8 @@
 HELP.md
 target/
-.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
 ### STS ###
 .apt_generated
@@ -30,5 +32,9 @@ build/
 ### VS Code ###
 .vscode/
 
-### Knative func ###
-.func/
+### Don't include maven wrapper jar file ###
+.mvn/wrapper/maven-wrapper.jar
+
+# Functions use the .func directory for local runtime data which should
+# generally not be tracked in source control:
+/.func

@@ -1,25 +1,26 @@
-specVersion: 0.34.0
+specVersion: 0.35.0
 name: quote
 runtime: springboot
 registry: docker.io/trisberg
 image: docker.io/trisberg/quote
 imageDigest: ""
 created: 2022-10-17T19:40:35.549549-04:00
-invocation:
-  format: http
 build:
   buildpacks: []
   builder: pack
   buildEnvs:
   - name: BP_NATIVE_IMAGE
-    value: "false"
+    value: "true"
   - name: BP_JVM_VERSION
     value: "17"
+  - name: BP_MAVEN_BUILD_ARGUMENTS
+    value: -Pnative -Dmaven.test.skip=true --no-transfer-progress package
 run:
   volumes: []
   envs: []
 deploy:
   namespace: default
+  remote: false
   annotations: {}
   options: {}
   labels: []
